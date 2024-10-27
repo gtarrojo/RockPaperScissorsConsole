@@ -3,7 +3,7 @@
 let humanscore = 0;
 let computerScore = 0;
 
-// functions
+// game logic
 
 const getComputerChoice = function () {
   const number = Math.trunc(Math.random() * 3) + 1;
@@ -17,12 +17,37 @@ const getComputerChoice = function () {
 };
 
 const getHumanChoice = function () {
-  const choice = prompt("rock, paper or scissors?");
-  if (choice == "rock" || choice == "paper" || choice == "scissors") {
+  const choice = prompt("rock, paper or scissors?").toLowerCase();
+  if (choice === "rock" || choice === "paper" || choice === "scissors") {
     return choice;
   } else {
-    getHumanChoice();
+    return getHumanChoice();
   }
 };
 
-console.log(getHumanChoice());
+const playRound = function (humanChoice, computerChoice) {
+  let result = "";
+  if (humanChoice === computerChoice) {
+    result = "draw";
+  } else {
+    if (
+      (humanChoice === "paper" && computerChoice === "scissors") ||
+      (humanChoice === "rock" && computerChoice === "paper") ||
+      (humanChoice === "scissors" && computerChoice === "rock")
+    ) {
+      result = "lose";
+      computerScore++;
+    } else {
+      result = "win";
+      humanscore++;
+    }
+  }
+  console.log(
+    `You ${result}! Your choice was ${humanChoice} and computer selected ${computerChoice}`
+  );
+};
+
+const humanSelection = getHumanChoice();
+const computerSelection = getComputerChoice();
+
+playRound(humanSelection, computerSelection);
