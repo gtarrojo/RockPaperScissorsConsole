@@ -1,9 +1,12 @@
-// global variables
+// global variables //
 
-let humanscore = 0;
+let humanScore = 0;
 let computerScore = 0;
 
-// game logic
+// GAME LOGIC //
+///////////////
+
+// get computer choice
 
 const getComputerChoice = function () {
   const number = Math.trunc(Math.random() * 3) + 1;
@@ -16,6 +19,8 @@ const getComputerChoice = function () {
   }
 };
 
+// get human choice
+
 const getHumanChoice = function () {
   const choice = prompt("rock, paper or scissors?").toLowerCase();
   if (choice === "rock" || choice === "paper" || choice === "scissors") {
@@ -24,6 +29,8 @@ const getHumanChoice = function () {
     return getHumanChoice();
   }
 };
+
+// play round
 
 const playRound = function (humanChoice, computerChoice) {
   let result = "";
@@ -39,7 +46,7 @@ const playRound = function (humanChoice, computerChoice) {
       computerScore++;
     } else {
       result = "win";
-      humanscore++;
+      humanScore++;
     }
   }
   console.log(
@@ -47,7 +54,29 @@ const playRound = function (humanChoice, computerChoice) {
   );
 };
 
-const humanSelection = getHumanChoice();
-const computerSelection = getComputerChoice();
+// play game (5 rounds)
+let humanSelection;
+let computerSelection;
 
-playRound(humanSelection, computerSelection);
+const playGame = function () {
+  humanSelection = getHumanChoice();
+  computerSelection = getComputerChoice();
+
+  for (let i = 0; i < 5; i++) {
+    playRound(humanSelection, computerSelection);
+    console.log(
+      `Your score is ${humanScore} vs computer score ${computerScore}.`
+    );
+    humanSelection = getHumanChoice();
+    computerSelection = getComputerChoice();
+  }
+  if (humanScore > computerScore) {
+    console.log("You win the game!");
+  } else if (humanScore < computerScore) {
+    console.log("You lose the game!");
+  } else {
+    console.log("It is a draw!");
+  }
+};
+
+playGame();
